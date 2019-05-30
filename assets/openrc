@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+TOKEN_COMMAND='openstack --os-auth-type v3oidcmokeyapikey --os-identity-provider ccr --os-protocol openid --os-discovery-endpoint https://sso.ccr.buffalo.edu/.well-known/openid-configuration --os-client-id ccr-os-api --os-redirect-uri https://localhost/ccrauth token issue -f value -c id'
+
+if [ "$*" = "refresh token" ];then
+	rm -rf /scratch/OS_TOKEN
+	unset OS_TOKEN
+	$TOKEN_COMMAND > /scratch/OS_TOKEN
+	exit
+fi
+
+if [[ -z "$OS_TOKEN" ]] && [[ -e /scratch/OS_TOKEN ]]; then
+	OS_TOKEN=`cat /scratch/OS_TOKEN`
+fi
+export OS_TOKEN=${OS_TOKEN:-`$TOKEN_COMMAND`}
+
+if [ ! -z "$SAVE_TOKEN" ];then
+	rm -rf /scratch/OS_TOKEN
+	echo $OS_TOKEN > /scratch/OS_TOKEN
+fi
+
+$@

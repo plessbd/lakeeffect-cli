@@ -1,6 +1,6 @@
 FROM alpine:latest
 MAINTAINER Ben Plessinger <ben@plessinger.us>
-LABEL Description="Provides openstack client tools" Version="0.1"
+LABEL Description="Provides OpenStack client tools for the University at Buffalo Lake Effect OpenStack Cloud" Version="1"
 
 RUN apk add --update \
   ca-certificates \

@@ -27,14 +27,17 @@ OS_API_KEY='your API key'
 
 ### Set your token (makes things faster)
 By default this will always try to get a new token, this is not the best thing to do.
-So the following will set your token and reuse it.  If you get errors after a while you can rerun the `refresh token` command and replace it in the `envfile`
+So the following will set your token and reuse it.
 
-**Note the following commands assume you have a scratch sub directory**
+**NOTE: If you get errors after a while you can rerun the `refresh token` command and replace it in the `envfile`**
+
+**NOTE: the following commands assume you have a scratch sub directory**
 
 ```bash
-docker run -ti --rm -v $(pwd)/scratch:/scratcgh --env-file envfile lakeeffect-cli refresh token
+docker run -ti --rm -v $(pwd)/scratch:/scratch --env-file envfile lakeeffect-cli refresh token
 echo "OS_TOKEN='"`cat scratch/OS_TOKEN`"'" >> envfile
 ```
+If you don't want to set this in your env file, and you always mount /scratch as long as there is a file called OS_TOKEN in there it will use that.  So use as you please.
 
 ## Running commands
 
